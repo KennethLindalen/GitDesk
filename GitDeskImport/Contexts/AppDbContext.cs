@@ -1,4 +1,5 @@
 ﻿using GitDeskImport.Mappers;
+using GitDeskImport.Models;
 using GitDeskImport.Models.Business;
 using GitDeskImport.Models.User;
 
@@ -14,6 +15,7 @@ public class AppDbContext : IdentityDbContext<ApplicationUser>
 
     public DbSet<BusinessModel> Businesses { get; set; }
     public DbSet<SyncMapping> SyncMappings { get; set; }
+    public DbSet<SyncConfiguration> SyncConfigurations { get; set; }
     public DbSet<BusinessInvite> BusinessInvites { get; set; }
 
 

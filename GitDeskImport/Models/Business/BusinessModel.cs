@@ -12,32 +12,32 @@ public class BusinessModel
     private string _githubToken;
     public string WebhookSecret { get; set; }
 
-    public string ZendeskDomain { get; set; }
+    public string? ZendeskDomain { get; set; }
 
     [NotMapped]
-    public string ZendeskApiToken
+    public string? ZendeskApiToken
     {
         get => _tokenProtector?.Unprotect(_zendeskApiToken);
         set => _zendeskApiToken = _tokenProtector?.Protect(value);
     }
 
     [NotMapped]
-    public string GitHubToken
+    public string? GitHubToken
     {
         get => _tokenProtector?.Unprotect(_githubToken);
         set => _githubToken = _tokenProtector?.Protect(value);
     }
 
-    public string GitHubUsername { get; set; }
+    public string? GitHubUsername { get; set; }
 
     // Raw encrypted values for EF Core to persist
-    public string EncryptedZendeskApiToken
+    public string? EncryptedZendeskApiToken
     {
         get => _zendeskApiToken;
         set => _zendeskApiToken = value;
     }
 
-    public string EncryptedGitHubToken
+    public string? EncryptedGitHubToken
     {
         get => _githubToken;
         set => _githubToken = value;

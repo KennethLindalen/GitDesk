@@ -34,11 +34,10 @@ public class RegisterBusinessModel : PageModel
         [Required][EmailAddress] public string Email { get; set; }
         [Required][DataType(DataType.Password)] public string Password { get; set; }
 
-        [Required] public string ZendeskDomain { get; set; }
-        [Required] public string ZendeskApiToken { get; set; }
-
-        [Required] public string GitHubUsername { get; set; }
-        [Required] public string GitHubToken { get; set; }
+        public string ZendeskDomain { get; set; } = String.Empty;
+        public string ZendeskApiToken { get; set; } = String.Empty;
+        public string GitHubUsername { get; set; } = String.Empty;
+        public string GitHubToken { get; set; } = String.Empty;
     }
 
     public async Task<IActionResult> OnPostAsync()

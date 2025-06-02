@@ -1,0 +1,31 @@
+﻿@page
+@model Step3Model
+@{
+    ViewData["Title"] = "Step 3: Confirm and create sync";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<form method="post">
+    <dl class="row">
+        <dt class="col-sm-3">Source System</dt>
+        <dd class="col-sm-9">@Model.State.SourceSystem</dd>
+
+        @if (Model.State.SourceSystem == "GitHub")
+        {
+            <dt class="col-sm-3">Repository</dt>
+            <dd class="col-sm-9">@Model.State.Repository</dd>
+        }
+
+        @if (Model.State.SourceSystem == "Zendesk")
+        {
+            <dt class="col-sm-3">Zendesk Domain</dt>
+            <dd class="col-sm-9">@Model.State.ZendeskDomain</dd>
+        }
+
+        <dt class="col-sm-3">Sync Frequency</dt>
+        <dd class="col-sm-9">@Model.State.SyncFrequency</dd>
+    </dl>
+
+    <button type="submit" class="btn btn-success">Create Sync</button>
+</form>

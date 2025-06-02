@@ -33,17 +33,16 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
                     @if (User.Identity.IsAuthenticated)
                     {
-                        <a asp-page="/Dashboard">Dashboard</a>
-                        <a asp-page="/Mappings/Index">Mappings</a>
-                        <a asp-area="Identity" asp-page="/Account/Manage/Index">My Profile</a>
+                        <a class="nav-link" asp-page="/Dashboard">Dashboard</a> 
+                        <a class="nav-link" asp-area="Identity" asp-page="/Account/Manage/Index">My Profile</a>
                         <form method="post" asp-area="Identity" asp-page="/Account/Logout">
                             <button type="submit" class="btn btn-link">Logout</button>
                         </form>
                     }
                     else
                     {
-                        <a asp-area="Identity" asp-page="/Account/Login">Login</a>
-                        <a asp-page="/RegisterBusiness">Register</a>
+                        <a class="nav-link" asp-area="Identity" asp-page="/Account/Login">Login</a>
+                        <a class="nav-link" asp-page="/RegisterBusiness">Register</a>
                     }
                 </div>
             </div>

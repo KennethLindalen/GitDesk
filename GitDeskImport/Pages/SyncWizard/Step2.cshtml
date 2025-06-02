@@ -1,0 +1,31 @@
+﻿@page
+@model Step2Model
+@{
+    ViewData["Title"] = "Step 2: Configure sync";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<form method="post">
+    @if (Model.State.SourceSystem == "GitHub")
+    {
+        <div class="form-group">
+            <label for="State.Repository">GitHub Repository (e.g. org/repo)</label>
+            <input asp-for="State.Repository" class="form-control" />
+        </div>
+    }
+    else if (Model.State.SourceSystem == "Zendesk")
+    {
+        <div class="form-group">
+            <label for="State.ZendeskDomain">Zendesk Subdomain (e.g. mycompany)</label>
+            <input asp-for="State.ZendeskDomain" class="form-control" />
+        </div>
+    }
+
+    <div class="form-group">
+        <label for="State.SyncFrequency">Sync Frequency (e.g. hourly, daily)</label>
+        <input asp-for="State.SyncFrequency" class="form-control" />
+    </div>
+
+    <button type="submit" class="btn btn-primary mt-3">Next</button>
+</form>

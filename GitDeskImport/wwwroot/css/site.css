@@ -18,5 +18,10 @@ html {
 }
 
 body {
-  margin-bottom: 60px;
+  padding-top: 60px;
+  padding-bottom: 60px;
+}
+
+h1, h2, h3 {
+  font-weight: 600;
 }

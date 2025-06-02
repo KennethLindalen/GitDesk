@@ -38,7 +38,9 @@ public class ProfileModel : PageModel
         var user = await _context.Users
             .Include(u => u.BusinessModel)
             .FirstOrDefaultAsync(u => u.Id == _userManager.GetUserId(User));
+
         var business = user.BusinessModel;
+        SetConnectionStatus(user);
         business.AttachProtector(_tokenProtector);
 
         Input = new ProfileInput
@@ -53,8 +55,11 @@ public class ProfileModel : PageModel
 
     public async Task<IActionResult> OnPostAsync()
     {
-        var user = await _userManager.GetUserAsync(User);
+        var user = await _context.Users
+            .Include(u => u.BusinessModel)
+            .FirstOrDefaultAsync(u => u.Id == _userManager.GetUserId(User));
         var business = user.BusinessModel;
+        SetConnectionStatus(user);
         business.AttachProtector(_tokenProtector);
 
         user.Email = Input.Email;
@@ -71,5 +76,17 @@ public class ProfileModel : PageModel
 
         TempData["Success"] = "Profile updated successfully.";
         return RedirectToPage();
+    }
+    
+    public bool IsZendeskConfigured { get; set; }
+    public bool IsGitHubConfigured { get; set; }
+
+    private void SetConnectionStatus(ApplicationUser user)
+    {
+        IsZendeskConfigured = !string.IsNullOrWhiteSpace(user.BusinessModel.EncryptedZendeskApiToken) &&
+                              !string.IsNullOrWhiteSpace(user.BusinessModel.ZendeskDomain);
+
+        IsGitHubConfigured = !string.IsNullOrWhiteSpace(user.BusinessModel.EncryptedGitHubToken) &&
+                             !string.IsNullOrWhiteSpace(user.BusinessModel.GitHubUsername);
     }
 }

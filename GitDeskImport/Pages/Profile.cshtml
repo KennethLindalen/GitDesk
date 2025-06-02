@@ -3,7 +3,8 @@
 @{
     ViewData["Title"] = "My Profile";
 }
-<h2>My Profile</h2>
+
+<h2 class="mb-4">System Configuration - Connections</h2>
 
 @if (TempData["Success"] != null)
 {
@@ -11,23 +12,73 @@
 }
 
 <form method="post">
-    <h4>User Info</h4>
-    <label>Email:</label>
-    <input asp-for="Input.Email" class="form-control" />
-<p>
-    <a asp-area="Identity" asp-page="/Account/Manage/ChangePassword">Change Password</a>
-</p>
-    <h4 class="mt-3">Zendesk Settings</h4>
-    <label>Domain:</label>
-    <input asp-for="Input.ZendeskDomain" class="form-control" />
-    <label>API Token:</label>
-    <input asp-for="Input.ZendeskApiToken" class="form-control" />
+    <div class="row">
+        <div class="col-lg-6 mb-4">
+            <div class="card shadow-sm">
+                <div class="card-header bg-primary text-white">
+                    Zendesk Connection
+                </div>
+                @if (Model.IsZendeskConfigured)
+                                    {
+                                        <span class="badge bg-success">Connected</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="badge bg-danger">Not Connected</span>
+                                    }
+                <div class="card-body">
+                    <p class="text-muted mb-3">
+                        Connect your Zendesk account so we can sync support tickets.
+                    </p>
+                    <div class="mb-3">
+                        <label asp-for="Input.ZendeskDomain" class="form-label">Zendesk Domain</label>
+                        <input asp-for="Input.ZendeskDomain" class="form-control" placeholder="yourcompany.zendesk.com" />
+                        <small class="form-text text-muted">Enter your full Zendesk subdomain (without https://).</small>
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="Input.ZendeskApiToken" class="form-label">API Token</label>
+                        <input asp-for="Input.ZendeskApiToken" class="form-control" placeholder="Paste your token here" />
+                        <small class="form-text text-muted">Find this under Admin → API → Token Access in Zendesk.</small>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-    <h4 class="mt-3">GitHub Settings</h4>
-    <label>Username:</label>
-    <input asp-for="Input.GitHubUsername" class="form-control" />
-    <label>Personal Access Token:</label>
-    <input asp-for="Input.GitHubToken" class="form-control" />
+        <div class="col-lg-6 mb-4">
+            <div class="card shadow-sm">
+                <div class="card-header bg-dark text-white">
+                    GitHub Connection
+                </div>
+                @if (Model.IsGitHubConfigured)
+                                    {
+                                        <span class="badge bg-success">Connected</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="badge bg-danger">Not Connected</span>
+                                    }
+                <div class="card-body">
+                    <p class="text-muted mb-3">
+                        Connect your GitHub account to sync issues and comments.
+                    </p>
+                    <div class="mb-3">
+                        <label asp-for="Input.GitHubUsername" class="form-label">GitHub Username</label>
+                        <input asp-for="Input.GitHubUsername" class="form-control" placeholder="octocat" />
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="Input.GitHubToken" class="form-label">Personal Access Token</label>
+                        <input asp-for="Input.GitHubToken" class="form-control" placeholder="Paste your token here" />
+                        <small class="form-text text-muted">
+                            Generate a token at <a href="https://github.com/settings/tokens" target="_blank">github.com/settings/tokens</a>
+                            with <code>repo</code> and <code>issues</code> scopes.
+                        </small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
-    <button class="btn btn-primary mt-3" type="submit">Save</button>
+    <div class="text-end">
+        <button class="btn btn-success btn-lg" type="submit">Save Changes</button>
+    </div>
 </form>

@@ -1,0 +1,67 @@
+﻿@page
+@{
+    ViewData["Title"] = "Pricing";
+}
+
+<div class="container my-5">
+    <h1 class="mb-4 text-center">Simple & Affordable Pricing</h1>
+    <p class="text-muted text-center mb-5">
+        Choose a plan that fits your team's size and needs. All plans include secure syncs between GitHub and Zendesk.
+    </p>
+
+    <div class="row text-center">
+        <!-- Free Tier -->
+        <div class="col-md-4 mb-4">
+            <div class="card border-secondary h-100">
+                <div class="card-header bg-light">
+                    <h4 class="my-0">Free</h4>
+                </div>
+                <div class="card-body">
+                    <h1 class="card-title pricing-card-title">$0 <small class="text-muted">/mo</small></h1>
+                    <ul class="list-unstyled mt-3 mb-4">
+                        <li>Up to 1 sync</li>
+                        <li>Basic support</li>
+                        <li>Manual sync only</li>
+                    </ul>
+                    <button class="btn btn-outline-secondary w-100" disabled>Current Plan</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Starter Tier -->
+        <div class="col-md-4 mb-4">
+            <div class="card border-primary h-100 shadow">
+                <div class="card-header bg-primary text-white">
+                    <h4 class="my-0">Starter</h4>
+                </div>
+                <div class="card-body">
+                    <h1 class="card-title pricing-card-title">$4.99 <small class="text-muted">/mo</small></h1>
+                    <ul class="list-unstyled mt-3 mb-4">
+                        <li>Up to 10 syncs</li>
+                        <li>Auto sync enabled</li>
+                        <li>Email support</li>
+                    </ul>
+                    <a class="btn btn-primary w-100" href="/Register">Get Started</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Pro Tier -->
+        <div class="col-md-4 mb-4">
+            <div class="card border-dark h-100">
+                <div class="card-header bg-dark text-white">
+                    <h4 class="my-0">Pro</h4>
+                </div>
+                <div class="card-body">
+                    <h1 class="card-title pricing-card-title">$9.99 <small class="text-muted">/mo</small></h1>
+                    <ul class="list-unstyled mt-3 mb-4">
+                        <li>Unlimited syncs</li>
+                        <li>Priority support</li>
+                        <li>Webhook + auto sync</li>
+                    </ul>
+                    <a class="btn btn-dark w-100" href="/Register">Get Pro</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

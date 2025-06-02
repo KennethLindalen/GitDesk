@@ -1,8 +1,128 @@
 ﻿@page
-@model MyApp.Namespace.IndexModel
+@model GitDeskImport.Pages.IndexModel
 @{
-    ViewData["Title"] = "Welcome";
+    ViewData["Title"] = "GitDesk Import – GitHub & Zendesk Sync";
+    Layout = "_Layout";
 }
-<h1>GitHub↔Zendesk Sync</h1>
-<p>Simplify your customer support and development workflow.</p>
-<a asp-page="/RegisterBusiness" class="btn btn-primary">Register your business</a>
+
+<!-- Hero -->
+<section class="text-center py-5 bg-light border-bottom">
+    <div class="container">
+        <h1 class="display-4">Connect GitHub and Zendesk — effortlessly</h1>
+        <p class="lead mt-3">
+            Bring your development and support teams together with automatic, secure syncing.
+        </p>
+        <div class="mt-4">
+            <a class="btn btn-primary btn-lg" asp-page="/Account/Register">Get Started</a>
+            <a class="btn btn-outline-secondary btn-lg ms-2" asp-page="/Account/Login">Log In</a>
+        </div>
+    </div>
+</section>
+
+<!-- Features -->
+<section class="py-5">
+    <div class="container text-center">
+        <h2 class="mb-4">Why GitDesk?</h2>
+        <div class="row">
+            <div class="col-md-4">
+                <img src="~/img/feature-sync.svg" alt="Sync icon" style="height: 80px;"/>
+                <h4 class="mt-3">Always in Sync</h4>
+                <p>Changes in GitHub or Zendesk automatically show up in the other — no manual updates needed.</p>
+            </div>
+            <div class="col-md-4">
+                <img src="~/img/feature-secure.svg" alt="Security icon" style="height: 80px;"/>
+                <h4 class="mt-3">Built for Security</h4>
+                <p>Your access tokens are encrypted and protected. We never share your data with third parties.</p>
+            </div>
+            <div class="col-md-4">
+                <img src="~/img/feature-setup.svg" alt="Setup icon" style="height: 80px;"/>
+                <h4 class="mt-3">No-Code Setup</h4>
+                <p>Use our guided wizard to connect your systems and go live in just a few minutes.</p>
+            </div>
+        </div>
+    </div>
+</section>
+<div class="container my-5">
+    <h1 class="mb-4 text-center">Simple & Affordable Pricing</h1>
+    <p class="text-muted text-center mb-5">
+        Choose a plan that fits your team's size and needs. All plans include secure syncs between GitHub and Zendesk.
+    </p>
+
+    <div class="row text-center">
+        <!-- Free Tier -->
+        <div class="col-md-4 mb-4">
+            <div class="card border-secondary h-100">
+                <div class="card-header bg-light">
+                    <h4 class="my-0">Free</h4>
+                </div>
+                <div class="card-body">
+                    <h1 class="card-title pricing-card-title">$0 <small class="text-muted">/mo</small></h1>
+                    <ul class="list-unstyled mt-3 mb-4">
+                        <li>Up to 1 sync</li>
+                        <li>Basic support</li>
+                        <li>Manual sync only</li>
+                    </ul>
+                    <button class="btn btn-outline-secondary w-100" disabled>Current Plan</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Starter Tier -->
+        <div class="col-md-4 mb-4">
+            <div class="card border-primary h-100 shadow">
+                <div class="card-header bg-primary text-white">
+                    <h4 class="my-0">Starter</h4>
+                </div>
+                <div class="card-body">
+                    <h1 class="card-title pricing-card-title">$4.99 <small class="text-muted">/mo</small></h1>
+                    <ul class="list-unstyled mt-3 mb-4">
+                        <li>Up to 10 syncs</li>
+                        <li>Auto sync enabled</li>
+                        <li>Email support</li>
+                    </ul>
+                    <a class="btn btn-primary w-100" href="/Register">Get Started</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Pro Tier -->
+        <div class="col-md-4 mb-4">
+            <div class="card border-dark h-100">
+                <div class="card-header bg-dark text-white">
+                    <h4 class="my-0">Pro</h4>
+                </div>
+                <div class="card-body">
+                    <h1 class="card-title pricing-card-title">$9.99 <small class="text-muted">/mo</small></h1>
+                    <ul class="list-unstyled mt-3 mb-4">
+                        <li>Unlimited syncs</li>
+                        <li>Priority support</li>
+                        <li>Webhook + auto sync</li>
+                    </ul>
+                    <a class="btn btn-dark w-100" href="/Register">Get Pro</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- How it works -->
+<section class="bg-light py-5">
+    <div class="container">
+        <h2 class="text-center mb-4">How It Works</h2>
+        <div class="row align-items-center mb-5">
+            <div class="col-md-6">
+                <img src="~/img/setup-wizard.png" class="img-fluid rounded shadow" alt="Wizard preview"/>
+            </div>
+            <div class="col-md-6">
+                <h4>1. Connect Your Accounts</h4>
+                <p>Securely link your GitHub and Zendesk accounts. No need to share passwords or write code.</p>
+
+                <h4 class="mt-4">2. Choose What to Sync</h4>
+                <p>Pick specific repositories or ticket types. Customize what information gets transferred and when.</p>
+
+                <h4 class="mt-4">3. Let It Run</h4>
+                <p>Once set up, GitDesk Import keeps your systems in sync — automatically and in real time.</p>
+            </div>
+        </div>
+    </div>
+</section>
+

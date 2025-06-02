@@ -3,5 +3,129 @@
 @{
     ViewData["Title"] = "Dashboard";
 }
-<h2>Welcome to @Model.BusinessName</h2>
-<p>This is your sync dashboard.</p>
+
+<h2>Welcome to your Dashboard</h2>
+
+<hr />
+<h4>Configured Syncs</h4>
+@if (Model.Configurations.Any())
+{
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Source</th>
+            <th>Details</th>
+            <th>Frequency</th>
+            <th>Created</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var config in Model.Configurations)
+        {
+            <tr>
+                <td>@config.SourceSystem</td>
+                <td>
+                    @if (config.SourceSystem == "GitHub")
+                    {
+                        @config.Repository
+                    }
+                    else if (config.SourceSystem == "Zendesk")
+                    {
+                        @config.ZendeskDomain
+                    }
+                </td>
+                <td>@config.SyncFrequency</td>
+                <td>@config.CreatedAt.ToShortDateString()</td>
+            </tr>
+        }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>No sync configurations found.</p>
+}
+
+<a class="btn btn-primary mt-2" asp-page="/SyncWizard/Step1">Create new sync</a>
+
+<hr />
+@if (!Model.IsGitHubConfigured || !Model.IsZendeskConfigured)
+{
+    <div class="alert alert-warning">
+        <h5 class="mb-2">Your integration setup is incomplete</h5>
+
+        <ul>
+            @if (!Model.IsGitHubConfigured)
+            {
+                <li>
+                    <strong>GitHub not connected.</strong>
+                    <a asp-page="/Profile">Enter your GitHub token</a>
+                    <br />
+                    <small class="text-muted">
+                        Don’t know how? <a data-bs-toggle="collapse" href="#githubHelp">Click here</a>.
+                    </small>
+                    <div class="collapse mt-2" id="githubHelp">
+                        <div class="card card-body">
+                            <ol>
+                                <li>Go to your GitHub account → Settings → Developer settings → Personal access tokens.</li>
+                                <li>Generate a new token with <code>repo</code> and <code>issues</code> scopes.</li>
+                                <li>Copy and paste it into your <a asp-page="/Profile">profile page</a>.</li>
+                            </ol>
+                        </div>
+                    </div>
+                </li>
+            }
+
+            @if (!Model.IsZendeskConfigured)
+            {
+                <li class="mt-3">
+                    <strong>Zendesk not connected.</strong>
+                    <a asp-page="/Profile">Enter your Zendesk token</a>
+                    <br />
+                    <small class="text-muted">
+                        Don’t know how? <a data-bs-toggle="collapse" href="#zendeskHelp">Click here</a>.
+                    </small>
+                    <div class="collapse mt-2" id="zendeskHelp">
+                        <div class="card card-body">
+                            <ol>
+                                <li>Go to your Zendesk admin panel → API → Token Access.</li>
+                                <li>Generate an API token with read/write access.</li>
+                                <li>Paste it into your <a asp-page="/Profile">profile page</a>.</li>
+                            </ol>
+                        </div>
+                    </div>
+                </li>
+            }
+        </ul>
+    </div>
+}
+
+<h4>Recent Mappings</h4>
+@if (Model.Mappings.Any())
+{
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Zendesk Ticket</th>
+            <th>GitHub Issue</th>
+            <th>Repository</th>
+            <th>Last Synced</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var mapping in Model.Mappings)
+        {
+            <tr>
+                <td>@mapping.ZendeskTicketId</td>
+                <td>@mapping.GitHubIssueNumber</td>
+                <td>@mapping.GitHubRepoFullName</td>
+                <td>@mapping.LastSyncedAt.ToShortDateString()</td>
+            </tr>
+        }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>No existing mappings found.</p>
+}

@@ -1,0 +1,19 @@
+﻿@page
+@model Step1Model
+@{
+    ViewData["Title"] = "Step 1: Select source system";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<form method="post">
+    <div class="form-group">
+        <label for="SourceSystem">Source System</label>
+        <select asp-for="SourceSystem" class="form-control">
+            <option value="">-- Select --</option>
+            <option value="GitHub">GitHub</option>
+            <option value="Zendesk">Zendesk</option>
+        </select>
+    </div>
+    <button type="submit" class="btn btn-primary mt-3">Next</button>
+</form>
