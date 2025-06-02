@@ -1,0 +1,33 @@
+﻿@page
+@model ProfileModel
+@{
+    ViewData["Title"] = "My Profile";
+}
+<h2>My Profile</h2>
+
+@if (TempData["Success"] != null)
+{
+    <div class="alert alert-success">@TempData["Success"]</div>
+}
+
+<form method="post">
+    <h4>User Info</h4>
+    <label>Email:</label>
+    <input asp-for="Input.Email" class="form-control" />
+<p>
+    <a asp-area="Identity" asp-page="/Account/Manage/ChangePassword">Change Password</a>
+</p>
+    <h4 class="mt-3">Zendesk Settings</h4>
+    <label>Domain:</label>
+    <input asp-for="Input.ZendeskDomain" class="form-control" />
+    <label>API Token:</label>
+    <input asp-for="Input.ZendeskApiToken" class="form-control" />
+
+    <h4 class="mt-3">GitHub Settings</h4>
+    <label>Username:</label>
+    <input asp-for="Input.GitHubUsername" class="form-control" />
+    <label>Personal Access Token:</label>
+    <input asp-for="Input.GitHubToken" class="form-control" />
+
+    <button class="btn btn-primary mt-3" type="submit">Save</button>
+</form>

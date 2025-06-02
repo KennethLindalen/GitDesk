@@ -1,0 +1,70 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Profile";
+    ViewData["ActivePage"] = ManageNavPages.Index;
+}
+
+<h3>@ViewData["Title"]</h3>
+<partial name="_StatusMessage" for="StatusMessage" />
+
+<div class="row">
+    <div class="col-md-6">
+        <form id="profile-form" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
+
+            <div class="form-floating mb-3">
+                <input asp-for="Username" class="form-control" placeholder="Username" disabled />
+                <label asp-for="Username" class="form-label"></label>
+            </div>
+
+            <div class="form-floating mb-3">
+                <input asp-for="Input.Email" class="form-control" placeholder="Email address" />
+                <label asp-for="Input.Email" class="form-label">Email</label>
+                <span asp-validation-for="Input.Email" class="text-danger"></span>
+            </div>
+
+            <div class="form-floating mb-3">
+                <input asp-for="Input.PhoneNumber" class="form-control" placeholder="Phone number" />
+                <label asp-for="Input.PhoneNumber" class="form-label"></label>
+                <span asp-validation-for="Input.PhoneNumber" class="text-danger"></span>
+            </div>
+
+            <hr />
+            <h4 class="mt-4">Zendesk Settings</h4>
+
+            <div class="form-floating mb-3">
+                <input asp-for="Input.ZendeskDomain" class="form-control" placeholder="yourcompany.zendesk.com" />
+                <label asp-for="Input.ZendeskDomain" class="form-label">Zendesk Domain</label>
+                <span asp-validation-for="Input.ZendeskDomain" class="text-danger"></span>
+            </div>
+
+            <div class="form-floating mb-3">
+                <input asp-for="Input.ZendeskApiToken" class="form-control" placeholder="Zendesk API Token" />
+                <label asp-for="Input.ZendeskApiToken" class="form-label">Zendesk API Token</label>
+                <span asp-validation-for="Input.ZendeskApiToken" class="text-danger"></span>
+            </div>
+
+            <hr />
+            <h4 class="mt-4">GitHub Settings</h4>
+
+            <div class="form-floating mb-3">
+                <input asp-for="Input.GitHubUsername" class="form-control" placeholder="GitHub username" />
+                <label asp-for="Input.GitHubUsername" class="form-label">GitHub Username</label>
+                <span asp-validation-for="Input.GitHubUsername" class="text-danger"></span>
+            </div>
+
+            <div class="form-floating mb-3">
+                <input asp-for="Input.GitHubToken" class="form-control" placeholder="GitHub Personal Access Token" />
+                <label asp-for="Input.GitHubToken" class="form-label">GitHub Token</label>
+                <span asp-validation-for="Input.GitHubToken" class="text-danger"></span>
+            </div>
+
+            <button id="update-profile-button" type="submit" class="w-100 btn btn-lg btn-primary mt-3">Save</button>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

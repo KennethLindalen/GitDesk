@@ -1,0 +1,45 @@
+﻿@page
+@model GitDeskImport.Pages.Mappings.IndexModel
+@{
+    ViewData["Title"] = "Sync mappings";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<a class="btn btn-primary mb-3" asp-page="/Mappings/Create">Opprett ny mapping</a>
+
+@if (!Model.Mappings.Any())
+{
+    <p>Ingen sync-mappinger funnet.</p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Zendesk Ticket</th>
+                <th>GitHub Issue</th>
+                <th>Sist synkronisert</th>
+                <th>Handlinger</th>
+            </tr>
+        </thead>
+        <tbody>
+        @foreach (var item in Model.Mappings)
+        {
+            <tr>
+                <td>@item.ZendeskTicketId</td>
+                <td>@item.GitHubRepoFullName#@item.GitHubIssueNumber</td>
+                <td>@item.LastSyncedAt?.ToLocalTime().ToString("g")</td>
+                <td>
+                    <form method="post" asp-page-handler="Sync" asp-route-id="@item.Id" class="d-inline">
+                        <button type="submit" class="btn btn-sm btn-outline-primary">Sync nå</button>
+                    </form>
+                    <form method="post" asp-page-handler="Delete" asp-route-id="@item.Id" class="d-inline ms-2">
+                        <button type="submit" class="btn btn-sm btn-outline-danger">Slett</button>
+                    </form>
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+}

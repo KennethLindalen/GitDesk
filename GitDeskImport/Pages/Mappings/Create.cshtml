@@ -1,0 +1,34 @@
+﻿@page
+@model GitDeskImport.Pages.Mappings.CreateModel
+@{
+    ViewData["Title"] = "Opprett ny mapping";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<form method="post">
+    <div class="form-group mb-3">
+        <label asp-for="Input.ZendeskTicketId" class="form-label"></label>
+        <input asp-for="Input.ZendeskTicketId" class="form-control" />
+        <span asp-validation-for="Input.ZendeskTicketId" class="text-danger"></span>
+    </div>
+
+    <div class="form-group mb-3">
+        <label asp-for="Input.GitHubRepoFullName" class="form-label">GitHub repo (org/repo)</label>
+        <input asp-for="Input.GitHubRepoFullName" class="form-control" />
+        <span asp-validation-for="Input.GitHubRepoFullName" class="text-danger"></span>
+    </div>
+
+    <div class="form-group mb-3">
+        <label asp-for="Input.GitHubIssueNumber" class="form-label"></label>
+        <input asp-for="Input.GitHubIssueNumber" class="form-control" />
+        <span asp-validation-for="Input.GitHubIssueNumber" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-success">Opprett</button>
+    <a asp-page="Index" class="btn btn-secondary ms-2">Avbryt</a>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
