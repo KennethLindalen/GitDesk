@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GitDeskImport.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250602134810_init")]
+    [Migration("20250602151123_init")]
     partial class init
     {
         /// <inheritdoc />
@@ -25,7 +25,7 @@ namespace GitDeskImport.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("Business", b =>
+            modelBuilder.Entity("BusinessModel", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -44,6 +44,10 @@ namespace GitDeskImport.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("WebhookSecret")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -75,15 +79,42 @@ namespace GitDeskImport.Migrations
                     b.Property<DateTime>("LastSyncedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("ZendeskTicketId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<long>("ZendeskTicketId")
+                        .HasColumnType("bigint");
 
                     b.HasKey("Id");
 
                     b.HasIndex("BusinessId");
 
                     b.ToTable("SyncMappings");
+                });
+
+            modelBuilder.Entity("GitDeskImport.Models.Business.BusinessInvite", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<Guid>("BusinessModelId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("InviteCode")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("Used")
+                        .HasColumnType("bit");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BusinessModelId");
+
+                    b.ToTable("BusinessInvites");
                 });
 
             modelBuilder.Entity("GitDeskImport.Models.User.ApplicationUser", b =>
@@ -299,24 +330,35 @@ namespace GitDeskImport.Migrations
 
             modelBuilder.Entity("GitDeskImport.Mappers.SyncMapping", b =>
                 {
-                    b.HasOne("Business", "Business")
+                    b.HasOne("BusinessModel", "BusinessModel")
                         .WithMany("SyncMappings")
                         .HasForeignKey("BusinessId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Business");
+                    b.Navigation("BusinessModel");
+                });
+
+            modelBuilder.Entity("GitDeskImport.Models.Business.BusinessInvite", b =>
+                {
+                    b.HasOne("BusinessModel", "BusinessModel")
+                        .WithMany()
+                        .HasForeignKey("BusinessModelId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("BusinessModel");
                 });
 
             modelBuilder.Entity("GitDeskImport.Models.User.ApplicationUser", b =>
                 {
-                    b.HasOne("Business", "Business")
+                    b.HasOne("BusinessModel", "BusinessModel")
                         .WithMany("Users")
                         .HasForeignKey("BusinessId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Business");
+                    b.Navigation("BusinessModel");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -370,7 +412,7 @@ namespace GitDeskImport.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Business", b =>
+            modelBuilder.Entity("BusinessModel", b =>
                 {
                     b.Navigation("SyncMappings");
 

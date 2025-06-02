@@ -33,16 +33,16 @@ public class WebhookController : ControllerBase
         var issueNumber = body.GetProperty("issue").GetProperty("number").GetInt32();
 
         var mapping = await _context.SyncMappings
-            .Include(m => m.Business)
+            .Include(m => m.BusinessModel)
             .FirstOrDefaultAsync(m => m.GitHubRepoFullName == repo && m.GitHubIssueNumber == issueNumber);
 
         if (mapping == null)
             return NotFound();
 
-        mapping.Business.AttachProtector(_protector);
+        mapping.BusinessModel.AttachProtector(_protector);
 
-        var github = new GitHubService(mapping.Business.GitHubToken);
-        var zendesk = new ZendeskService(mapping.Business.ZendeskApiToken, mapping.Business.ZendeskDomain);
+        var github = new GitHubService(mapping.BusinessModel.GitHubToken);
+        var zendesk = new ZendeskService(mapping.BusinessModel.ZendeskApiToken, mapping.BusinessModel.ZendeskDomain);
 
         var issue = await github.GetIssue(repo, issueNumber);
         await zendesk.AddInternalNote(mapping.ZendeskTicketId, $"GitHub updated: {issue.Title}");

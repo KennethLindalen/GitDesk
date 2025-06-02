@@ -12,7 +12,7 @@ public class AppDbContext : IdentityDbContext<ApplicationUser>
     public AppDbContext(DbContextOptions<AppDbContext> options)
         : base(options) { }
 
-    public DbSet<Business> Businesses { get; set; }
+    public DbSet<BusinessModel> Businesses { get; set; }
     public DbSet<SyncMapping> SyncMappings { get; set; }
     public DbSet<BusinessInvite> BusinessInvites { get; set; }
 
@@ -21,16 +21,16 @@ public class AppDbContext : IdentityDbContext<ApplicationUser>
     {
         base.OnModelCreating(builder);
 
-        builder.Entity<Business>()
+        builder.Entity<BusinessModel>()
             .Ignore(b => b.ZendeskApiToken)
             .Ignore(b => b.GitHubToken)
             .HasMany(b => b.Users)
-            .WithOne(u => u.Business)
+            .WithOne(u => u.BusinessModel)
             .HasForeignKey(u => u.BusinessId);
 
-        builder.Entity<Business>()
+        builder.Entity<BusinessModel>()
             .HasMany(b => b.SyncMappings)
-            .WithOne(m => m.Business)
+            .WithOne(m => m.BusinessModel)
             .HasForeignKey(m => m.BusinessId);
     }
 }

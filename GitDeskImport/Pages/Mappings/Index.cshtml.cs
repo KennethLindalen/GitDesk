@@ -35,20 +35,20 @@ public class IndexModel : PageModel
             .ToListAsync();
     }
 
-    public async Task<IActionResult> OnPostSyncAsync(int id)
+    public async Task<IActionResult> OnPostSyncAsync(Guid id)
     {
         var user = await _userManager.GetUserAsync(User);
         var mapping = await _context.SyncMappings
-            .Include(m => m.Business)
+            .Include(m => m.BusinessModel)
             .FirstOrDefaultAsync(m => m.Id == id && m.BusinessId == user.BusinessId);
 
         if (mapping == null)
             return NotFound();
 
-        mapping.Business.AttachProtector(_protector);
+        mapping.BusinessModel.AttachProtector(_protector);
 
-        var zendesk = new ZendeskService(mapping.Business.ZendeskApiToken, mapping.Business.ZendeskDomain);
-        var github = new GitHubService(mapping.Business.GitHubToken);
+        var zendesk = new ZendeskService(mapping.BusinessModel.ZendeskApiToken, mapping.BusinessModel.ZendeskDomain);
+        var github = new GitHubService(mapping.BusinessModel.GitHubToken);
 
         var ticket = await zendesk.GetTicket(mapping.ZendeskTicketId);
         await github.PostComment(mapping.GitHubRepoFullName, mapping.GitHubIssueNumber, $"Manual sync: {ticket.Subject}");
@@ -59,7 +59,7 @@ public class IndexModel : PageModel
         return RedirectToPage();
     }
 
-    public async Task<IActionResult> OnPostDeleteAsync(int id)
+    public async Task<IActionResult> OnPostDeleteAsync(Guid id)
     {
         var user = await _userManager.GetUserAsync(User);
         var mapping = await _context.SyncMappings

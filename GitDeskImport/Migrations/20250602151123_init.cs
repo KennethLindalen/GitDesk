@@ -31,6 +31,7 @@ namespace GitDeskImport.Migrations
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    WebhookSecret = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     ZendeskDomain = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     GitHubUsername = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     EncryptedZendeskApiToken = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -96,11 +97,33 @@ namespace GitDeskImport.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "BusinessInvites",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    BusinessModelId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    InviteCode = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Used = table.Column<bool>(type: "bit", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_BusinessInvites", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_BusinessInvites_Businesses_BusinessModelId",
+                        column: x => x.BusinessModelId,
+                        principalTable: "Businesses",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "SyncMappings",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    ZendeskTicketId = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ZendeskTicketId = table.Column<long>(type: "bigint", nullable: false),
                     GitHubRepoFullName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     GitHubIssueNumber = table.Column<int>(type: "int", nullable: false),
                     LastSyncedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -247,6 +270,11 @@ namespace GitDeskImport.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
+                name: "IX_BusinessInvites_BusinessModelId",
+                table: "BusinessInvites",
+                column: "BusinessModelId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_SyncMappings_BusinessId",
                 table: "SyncMappings",
                 column: "BusinessId");
@@ -269,6 +297,9 @@ namespace GitDeskImport.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetUserTokens");
+
+            migrationBuilder.DropTable(
+                name: "BusinessInvites");
 
             migrationBuilder.DropTable(
                 name: "SyncMappings");

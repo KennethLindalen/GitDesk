@@ -18,6 +18,6 @@ public class DashboardModel : PageModel
     public async Task OnGetAsync()
     {
         var user = await _userManager.GetUserAsync(User);
-        BusinessName = user?.Business?.Name ?? "(Unknown)";
+        BusinessName = user?.BusinessModel?.Name ?? "(Unknown)";
     }
 }

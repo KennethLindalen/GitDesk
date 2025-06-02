@@ -1,0 +1,20 @@
+﻿@page
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@model GitDeskImport.Pages.Admin.InviteModel
+@{
+    ViewData["Title"] = "Inviter bruker";
+}
+
+<h2>Inviter bruker til bedriften</h2>
+
+<form method="post">
+    <button class="btn btn-primary">Generer invitasjonslenke</button>
+</form>
+
+@if (Model.InviteLink != null)
+{
+    <div class="alert alert-success mt-3">
+        <strong>Invitasjonslenke:</strong><br />
+        <code>@Model.InviteLink</code>
+    </div>
+}

@@ -93,7 +93,7 @@ namespace GitDeskImport.Areas.Identity.Pages.Account.Manage
         public async Task<IActionResult> OnGetAsync()
 {
     var user = await _context.Users
-        .Include(u => u.Business)
+        .Include(u => u.BusinessModel)
         .FirstOrDefaultAsync(u => u.Id == _userManager.GetUserId(User));
 
     if (user == null)
@@ -102,7 +102,7 @@ namespace GitDeskImport.Areas.Identity.Pages.Account.Manage
     }
 
     var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
-    user.Business.AttachProtector(_tokenProtector);
+    user.BusinessModel.AttachProtector(_tokenProtector);
 
     Input = new InputModel
     {
@@ -110,10 +110,10 @@ namespace GitDeskImport.Areas.Identity.Pages.Account.Manage
         PhoneNumber = phoneNumber,
 
         // Custom additions
-        ZendeskDomain = user.Business.ZendeskDomain,
-        ZendeskApiToken = user.Business.ZendeskApiToken,
-        GitHubUsername = user.Business.GitHubUsername,
-        GitHubToken = user.Business.GitHubToken
+        ZendeskDomain = user.BusinessModel.ZendeskDomain,
+        ZendeskApiToken = user.BusinessModel.ZendeskApiToken,
+        GitHubUsername = user.BusinessModel.GitHubUsername,
+        GitHubToken = user.BusinessModel.GitHubToken
     };
 
     return Page();
@@ -122,7 +122,7 @@ namespace GitDeskImport.Areas.Identity.Pages.Account.Manage
 public async Task<IActionResult> OnPostAsync()
 {
     var user = await _context.Users
-        .Include(u => u.Business)
+        .Include(u => u.BusinessModel)
         .FirstOrDefaultAsync(u => u.Id == _userManager.GetUserId(User));
 
     if (user == null)
@@ -150,14 +150,14 @@ public async Task<IActionResult> OnPostAsync()
     user.Email = Input.Email;
     user.UserName = Input.Email;
 
-    user.Business.AttachProtector(_tokenProtector);
-    user.Business.ZendeskDomain = Input.ZendeskDomain;
-    user.Business.ZendeskApiToken = Input.ZendeskApiToken;
-    user.Business.GitHubUsername = Input.GitHubUsername;
-    user.Business.GitHubToken = Input.GitHubToken;
+    user.BusinessModel.AttachProtector(_tokenProtector);
+    user.BusinessModel.ZendeskDomain = Input.ZendeskDomain;
+    user.BusinessModel.ZendeskApiToken = Input.ZendeskApiToken;
+    user.BusinessModel.GitHubUsername = Input.GitHubUsername;
+    user.BusinessModel.GitHubToken = Input.GitHubToken;
 
     await _userManager.UpdateAsync(user);
-    _context.Update(user.Business);
+    _context.Update(user.BusinessModel);
     await _context.SaveChangesAsync();
 
     await _signInManager.RefreshSignInAsync(user);

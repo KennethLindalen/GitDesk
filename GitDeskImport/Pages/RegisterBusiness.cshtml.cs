@@ -45,7 +45,7 @@ public class RegisterBusinessModel : PageModel
     {
         if (!ModelState.IsValid) return Page();
 
-        var business = new Business
+        var business = new BusinessModel
         {
             Id = Guid.NewGuid(),
             Name = Input.BusinessName,
@@ -63,7 +63,7 @@ public class RegisterBusinessModel : PageModel
             UserName = Input.Email,
             Email = Input.Email,
             Role = "Admin",
-            Business = business
+            BusinessModel = business
         };
 
         var result = await _userManager.CreateAsync(user, Input.Password);

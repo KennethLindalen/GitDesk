@@ -15,5 +15,5 @@ public class SyncMapping
     public DateTime LastSyncedAt { get; set; }
 
     public Guid BusinessId { get; set; }
-    public Business Business { get; set; }
+    public BusinessModel BusinessModel { get; set; }
 }

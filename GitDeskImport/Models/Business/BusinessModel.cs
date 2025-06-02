@@ -3,7 +3,7 @@ using GitDeskImport.Mappers;
 using GitDeskImport.Models.User;
 using GitDeskImport.Services;
 
-public class Business
+public class BusinessModel
 {
     public Guid Id { get; set; }
     public string Name { get; set; }

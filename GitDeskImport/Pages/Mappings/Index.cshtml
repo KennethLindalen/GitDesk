@@ -29,7 +29,7 @@ else
             <tr>
                 <td>@item.ZendeskTicketId</td>
                 <td>@item.GitHubRepoFullName#@item.GitHubIssueNumber</td>
-                <td>@item.LastSyncedAt?.ToLocalTime().ToString("g")</td>
+                <td>@item.LastSyncedAt.ToLocalTime().ToString("g")</td>
                 <td>
                     <form method="post" asp-page-handler="Sync" asp-route-id="@item.Id" class="d-inline">
                         <button type="submit" class="btn btn-sm btn-outline-primary">Sync nå</button>

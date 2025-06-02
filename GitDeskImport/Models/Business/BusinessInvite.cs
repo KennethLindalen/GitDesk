@@ -1,11 +1,12 @@
-﻿namespace GitDeskImport.Models.Business;
+﻿
+namespace GitDeskImport.Models.Business;
 
 public class BusinessInvite
 {
     public int Id { get; set; }
-
-    public int BusinessId { get; set; }
-    public global::Business Business { get; set; } = null!;
+    
+    public Guid BusinessModelId { get; set; }
+    public BusinessModel BusinessModel { get; set; }
 
     public string InviteCode { get; set; } = Guid.NewGuid().ToString("N");
 

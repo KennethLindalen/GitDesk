@@ -36,9 +36,9 @@ public class ProfileModel : PageModel
     public async Task OnGetAsync()
     {
         var user = await _context.Users
-            .Include(u => u.Business)
+            .Include(u => u.BusinessModel)
             .FirstOrDefaultAsync(u => u.Id == _userManager.GetUserId(User));
-        var business = user.Business;
+        var business = user.BusinessModel;
         business.AttachProtector(_tokenProtector);
 
         Input = new ProfileInput
@@ -54,7 +54,7 @@ public class ProfileModel : PageModel
     public async Task<IActionResult> OnPostAsync()
     {
         var user = await _userManager.GetUserAsync(User);
-        var business = user.Business;
+        var business = user.BusinessModel;
         business.AttachProtector(_tokenProtector);
 
         user.Email = Input.Email;
